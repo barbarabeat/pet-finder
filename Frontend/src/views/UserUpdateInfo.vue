@@ -11,7 +11,7 @@
         shaped
         tile
         outlined
-        class=" pa-3 ma-4"
+        class=" pa-8 ma-6"
         color="white" >
             <v-card-title class="text">Atualizar cadastro</v-card-title>
         <v-form
@@ -159,9 +159,17 @@ export default {
     ],
     }),
 
+    mounted() {
+        if (localStorage.token) {
+        this.token = localStorage.token;
+        this.userId = localStorage.userId;
+        }
+        api.defaults.headers.Authorization = `Bearer ${this.token}`;
+    },
+
     methods: {
         async submit() {
-            try{ await api.post("/users/",{
+            try{ await api.put(`/users/${localStorage.userId}`,{
                     name: this.name,
                     email: this.email,
                     password: this.password,
@@ -176,9 +184,18 @@ export default {
                 this.$toast.error('Erro ao cadastrar', {
                 timeout: 2000,
                 });
-        }              
+            }              
         },
-
+        clear () {
+            this.name = '';
+            this.email = '';
+            this.password = null;
+            this.street = '';
+            this.number = '';
+            this.additional = '';
+            this.city = '';
+            this.state = '';
+        },
         async deleteUser(userId) {
             
             try{ await api.delete(`/users/${userId}`);
@@ -187,7 +204,7 @@ export default {
                 this.$toast.error('Erro ao deletar', {
                 timeout: 2000,
                 });
-        }              
+            }              
         },
 
     },
@@ -207,6 +224,6 @@ export default {
         align-items: center;
     }
     .alignButton{
-        margin-left: 230px;
+        margin-left: 170px;
            }
 </style>

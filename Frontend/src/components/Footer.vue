@@ -10,16 +10,7 @@
         class="text-center"
     >
         <v-card-text class="footer">
-        <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            class="mx-4"
-            icon
-        >
-            <v-icon size="24px">
-            {{ icon }}
-            </v-icon>
-        </v-btn>
+
         </v-card-text>
 
         <v-divider></v-divider>
@@ -35,12 +26,6 @@
 <script>
 export default {
     data: () => ({
-    icons: [
-        'mdi-account-edit-outline',
-        'mdi-dog',
-        'mdi-logout',
-
-    ],
     padless: false,
     variant: 'absolute',
     }),

@@ -2,25 +2,22 @@
 <div class="viewAnimals">
         <v-card
         elevation="8"
-        shaped
-        tile
         outlined
-        v-for="(item, i) in fetchRequests"
-            :key="i"
-        class="mx-auto my-12 pa-4 ms-14"
+        v-for="(item, index) in pets"
+        :key="`${index}-${item}`"
+        class="mx-auto my-8"
+        min-width="250"
+        max-width="250"
         color="white"    
     >
         <v-card-title>{{item.name}}</v-card-title>
         <v-divider class="mx-4"></v-divider>
-            <v-card-text>{{item.breed}}</v-card-text>
+            <v-card-text>Raça: {{item.breed}}</v-card-text>
 
-            <v-card-text>{{item.age}}</v-card-text>
+            <v-card-text>Idade: {{item.age}} / Peso: {{item.weight}}</v-card-text>
 
-            <v-card-text>{{item.weight}}</v-card-text>
-
-            <v-card-text>{{item.city}}</v-card-text>  
-            
-            <v-card-text>{{item.state}}</v-card-text>        
+            <v-card-text>Cidade: {{item.city}} - {{item.state}}</v-card-text>  
+    
         </v-card>
 </div> 
 </template>
@@ -31,7 +28,7 @@ import api from '../services/api';
 export default {
     name:"viewAnimals",
     data: () => ({
-            items:[],
+            pets:[],
         }),
 
     mounted() {
@@ -53,24 +50,10 @@ export default {
             try {
                 const resp = await api.get("/pets");
                // const req = resp; //object
-                const req = resp.data; //number + array
-                console.log(req[0].name);
-                return req;
-            /*for (let i = 0; i<= Object.keys(req).length; i++){
-                let arrayInfo = req.data.[i]; //array
-                console.log(arrayInfo);
-                let name = arrayInfo.name;
-                this.name = name;
-                let breed = arrayInfo.breed;
-                this.breed = breed;
-                let age = arrayInfo.age;
-                this.age = age; 
-                let weight = arrayInfo.weight;
-                this.weight = weight;
-                let city = arrayInfo.city;
-                this.city = city;  
-                let state = arrayInfo.breed;
-                this.state = state;           */                  
+                const req = resp.data; //number + array   
+                this.pets = req;     
+                return this.pets;
+                
         } catch (err) {
             console.log("ops! ocorreu um erro" + err);
         }
@@ -80,5 +63,9 @@ export default {
 </script>
 
 <style scoped>
-
+    .viewAnimals{
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        margin-right: -20px;
+    }
 </style>

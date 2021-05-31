@@ -1,11 +1,12 @@
 <template>
-<div class="userUpdateInfo">
+<div class="addPet">
 <v-card
     elevation="8"
     shaped
     tile
     outlined
-    class="mx-auto my-12"
+    class="mx-auto my-4"
+    offset-md="1"
     color="white" >
         <v-card-title class="text">Adicionar Pet</v-card-title>
     <v-form
@@ -36,7 +37,6 @@
         <v-text-field
         v-model="age"
         type="number"
-        :rules="numberRules"
         value="agw"
         label="Idade"
         outlined
@@ -118,9 +118,11 @@ export default {
     }),
 
     mounted() {
-        if (localStorage.userId) {
+        if (localStorage.token) {
+        this.token = localStorage.token;
         this.userId = localStorage.userId;
         }
+        api.defaults.headers.Authorization = `Bearer ${this.token}`;
     },
 
     methods: {
@@ -132,13 +134,26 @@ export default {
                     weight: this.weight,        
                     city: this.city,
                     state: this.state,
+                    isAdopted: false,
                 });
-                this.$router.push('/');
+                this.$toast.success('Pet incluído :D', {
+                    timeout: 2000,
+                });
+             this.$router.push('/animais');
             }catch(err){
                 this.$toast.error('Erro ao cadastrar', {
                 timeout: 2000,
                 });
         }            
+        },
+        clear() {
+            this.name = '';
+            this.breed = '';
+            this.age = null;
+            this.weight = '';
+            this.city = '';
+            this.state = '';
+            
         },
     },
 }

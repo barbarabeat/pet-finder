@@ -27,8 +27,8 @@ export default {
 <style scoped>
     #app {
         background-color: #F0EFA3;
-        height: 140vh;
-        width:  100vw;
+       /* height: 140vh;
+        width:  100vw;*/
     }
     #container {
     }

@@ -1,32 +1,23 @@
 <template>
 <div id="column">
     <v-row no-gutters>
-      <v-col
-        cols="4"
-        sm="6"
-        md="4"
-      >
-    <v-card
-    elevation="8"
-    shaped
-    tile
-    outlined
-    class="mx-auto my-12 pa-4 ms-14"
-    v-for="(item, i) in items"
-    :key="i"
-    color="white"    
->
-    <v-card-title>{{name}}</v-card-title>
-    <v-divider class="mx-4"></v-divider>
-            <v-card-text>{{item.breed}}</v-card-text>
+        <v-card
+        elevation="8"
+        outlined
+        v-for="(item, index) in pets"
+        :key="`${index}-${item}`"
+        class="mx-auto my-12"
+        min-width="300"
+        max-width="300"
+        color="white"    
+    >
+        <v-card-title>{{item.name}}</v-card-title>
+        <v-divider class="mx-4"></v-divider>
+            <v-card-text>Raça: {{item.breed}}</v-card-text>
 
-            <v-card-text>{{item.age}}</v-card-text>
+            <v-card-text>Idade: {{item.age}} / Peso: {{item.weight}}</v-card-text>
 
-            <v-card-text>{{item.weight}}</v-card-text>
-
-            <v-card-text>{{item.city}}</v-card-text>  
-            
-            <v-card-text>{{item.state}}</v-card-text>   
+            <v-card-text>Cidade: {{item.city}} - {{item.state}}</v-card-text>   
       <v-btn
         color="success"
         text
@@ -42,17 +33,10 @@
         Deletar Pet
       </v-btn>          
     </v-card>
-    </v-col>
-        <v-divider vertical class="pa-12"></v-divider>
-        <v-col
-        cols="6"
-        sm="4"
-        md="4"
-        offset-md="2"
-      >
-    <AddPet class="mx-auto pa-1"/>
-    </v-col>
+
+        <v-divider vertical></v-divider>
     </v-row>
+    <AddPet/>
 </div>    
 </template>
 
@@ -74,37 +58,46 @@ export default {
              userId:'',
             }, 
         ],
+        pets:[],
     }),
+
     components:{
         AddPet,
     },
 
     mounted() {
-        if (localStorage.userId) {
+        if (localStorage.token) {
+        this.token = localStorage.token;
         this.userId = localStorage.userId;
         }
+        api.defaults.headers.Authorization = `Bearer ${this.token}`;
     }, 
 
     async created() {
-        await api.get(`/pets/user-pets/${this.userId}`)
-            .then((resp) => (resp.data))
-            .catch((err) => {
-                console.error("ops! ocorreu um erro" + err);
-            });
+        try {
+            await this.fetchRequests();
+             const resp = await api.get(`/pets/user-pets/${this.userId}`)
+               // const req = resp; //object
+                const req = resp.data; //number + array   
+                this.pets = req;     
+                return this.pets;
+        }catch (error) {
+             console.log('Error setting up the request');
+        }
     },
    
     methods: {
         async fetchRequests(resp) {
-        try {
-            this.petId = resp.data.id;
-            const { data } = resp.data;
-            this.items = data.map((resp) => {
-            const copy = { ...resp };
-            return copy;
-            });
-        } catch (err) {
-            console.log("ops! ocorreu um erro" + err);
-        }
+            try {
+                this.petId = resp.data.id;
+                const { data } = resp.data;
+                this.items = data.map((resp) => {
+                const copy = { ...resp };
+                return copy;
+                });
+            } catch (err) {
+                console.log("ops! ocorreu um erro" + err);
+            }
     },
         async deletePet(petId) {
             
@@ -124,7 +117,5 @@ export default {
     #column{
         display:flex;
     }
-    .column{
-        padding-left: 100px;
-    }
+
 </style>

@@ -63,11 +63,12 @@ export default {
             {
             icon: 'mdi-logout',
             title: 'Logoff',
+            href: '/login'
             },
             {
             icon: 'mdi-account-edit-outline',
             title: 'Meus Dados',
-            href: '/atualizarCadastro'
+            href: '/atualizarCadastro/'
             },
             { 
             icon: 'mdi-dog',

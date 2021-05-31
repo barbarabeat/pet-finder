@@ -120,8 +120,9 @@ export default {
         this.$toast.success('Cadastrado com sucesso!', {
                 timeout: 2000,
          }); 
-         this.clear();           
+         this.$router.push('/login');
     },
+
     clear () {
         this.name = '',
         this.email = '',

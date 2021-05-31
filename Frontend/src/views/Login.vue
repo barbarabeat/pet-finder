@@ -29,7 +29,6 @@
     ></v-text-field>
 
     <v-btn
-    :disabled="invalid"
     color="success"
     class="mr-4"
     type="submit"
@@ -37,7 +36,7 @@
     >
     Entrar
     </v-btn> 
-    <a href="#/cadastrar">Ainda não tem conta?</a>       
+    <a href="#/cadastrar">Não tem cadastro?</a>       
 </v-form>
 </div>
 </template>
@@ -50,7 +49,7 @@ export default {
         name: 'login',
         valid: true,
         value: false,
-        userId:'',
+        token:'',
         email: '',
         emailRules: [
             v => !!v || 'E-mail é obrigatorio',
@@ -65,34 +64,34 @@ export default {
     ],
     }),
     mounted() {
-        if (localStorage.userId) {
-        this.userId = localStorage.userId;
+        if (localStorage.token) {
+        this.token = localStorage.token;
         }
     },
     methods: {
         async submit() {
-        try{ await api.post("/sessions",{
+        try{ 
+                const resp = await api.post("/sessions",{
                 email: this.email,
                 password: this.password,
                 });
-                this.$toast.success('Login efetuado com sucesso!', {
-                timeout: 2000,
-                });
-                this.$router.push('/viewAnimals');
+                localStorage.token = this.resp;
+                const token = resp.data.token;
+                const id = resp.data.user.id;
+                api.defaults.headers.Authorization = `Bearer ${token}`;
+                localStorage.token = token;
+                localStorage.userId = id;
+                this.$router.push('/animais');
+
+
             }catch(err){
                 this.$toast.error('Email/Senha inválido!', {
                 timeout: 2000,
-                });
+            });
         }
-        localStorage.userId = this.userId;
+
     },
-        clear () {
-            this.name = ''
-            this.email = ''
-            this.password = null
-            this.$refs.observer.reset()
-            },
-        },
+    },
 }
 </script>
 
