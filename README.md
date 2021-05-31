@@ -96,7 +96,6 @@ npm run start
 
  ### Pets
  ```
- http://localhost:3333/users POST: Create user
  body JSON:
 {
 	"name": "caramelo",
