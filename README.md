@@ -3,8 +3,8 @@ For a challenge
 
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/Javascript-43853D?style=for-the-badge&logo=javascript&logoColor=white)
-![Vue](https://img.shields.io/badge/Vue-404D59?style=for-the-badge&logo=vuejs&logoColor=white)
+![JavaScript](https://img.shields.io/badge/Javascript-43853D?style=for-the-badge&logo=javascript&color=yellow&logoColor=black)
+![Vue](https://img.shields.io/badge/Vue-404D59?style=for-the-badge&logo=vuejs&logoColor=white&color=green)
 ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Node](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
